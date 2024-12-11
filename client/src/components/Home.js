@@ -26,7 +26,6 @@ class Home extends Component {
 
 	singleFileUploadHandler = ( event ) => {
 		const data = new FormData();
-// If file selected
 		if ( this.state.selectedFile ) {
 			data.append( 'profileImage', this.state.selectedFile, this.state.selectedFile.name );
 			axios.post( '/api/profile/profile-img-upload', data, {
@@ -38,28 +37,24 @@ class Home extends Component {
 			})
 				.then( ( response ) => {
 					if ( 200 === response.status ) {
-						// If file size is larger than expected.
 						if( response.data.error ) {
 							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
 								this.ocShowAlert( 'Max size: 2MB', 'red' );
 							} else {
 								console.log( response.data );
-// If not the given file type
 								this.ocShowAlert( response.data.error, 'red' );
 							}
 						} else {
-							// Success
 							let fileName = response.data;
 							console.log( 'filedata', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
 						}
 					}
 				}).catch( ( error ) => {
-				// If another error
 				this.ocShowAlert( error, 'red' );
 			});
-		} else {
-			// if file not selected throw error
+		} 
+		else {
 			this.ocShowAlert( 'Please upload file', 'red' );
 		}
 	};
@@ -67,7 +62,6 @@ class Home extends Component {
 	multipleFileUploadHandler = () => {
 		const data = new FormData();
 		let selectedFiles = this.state.selectedFiles;
-// If file selected
 		if ( selectedFiles ) {
 			for ( let i = 0; i < selectedFiles.length; i++ ) {
 				data.append( 'galleryImage', selectedFiles[ i ], selectedFiles[ i ].name );
@@ -93,23 +87,19 @@ class Home extends Component {
 								this.ocShowAlert( response.data.error, 'red' );
 							}
 						} else {
-							// Success
 							let fileName = response.data;
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
 						}
 					}
 				}).catch( ( error ) => {
-				// If another error
 				this.ocShowAlert( error, 'red' );
 			});
 		} else {
-			// if file not selected throw error
 			this.ocShowAlert( 'Please upload file', 'red' );
 		}
 	};
 
-	// ShowAlert Function
 	ocShowAlert = ( message, background = '#3089cf' ) => {
 		let alertContainer = document.querySelector( '#oc-alert-container' ),
 			alertEl = document.createElement( 'div' ),
