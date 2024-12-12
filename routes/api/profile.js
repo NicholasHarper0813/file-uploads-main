@@ -1,9 +1,9 @@
+const multerS3 = require( 'multer-s3' );
 const express = require( 'express' );
 const aws = require( 'aws-sdk' );
 const multer = require('multer');
-const path = require( 'path' );
-const multerS3 = require( 'multer-s3' );
 const router = express.Router();
+const path = require( 'path' );
 
 const s3 = new aws.S3({
 	accessKeyId: 'xxx',
@@ -26,11 +26,13 @@ const profileImgUpload = multer({
 	}
 }).single('profileImage');
 
-function checkFileType( file, cb ){
+function checkFileType( file, cb )
+{
 	const filetypes = /jpeg|jpg|png|gif/;
 	const extname = filetypes.test( path.extname( file.originalname ).toLowerCase());
 	const mimetype = filetypes.test( file.mimetype );
-	if( mimetype && extname ){
+	if( mimetype && extname )
+	{
 		return cb( null, true );
 	} 
 	else 
@@ -80,14 +82,19 @@ const uploadsBusinessGallery = multer({
 router.post('/multiple-file-upload', ( req, res ) => {
 	uploadsBusinessGallery( req, res, ( error ) => {
 		console.log( 'files', req.files );
-		if( error ){
+		if( error )
+		{
 			console.log( 'errors', error );
 			res.json( { error: error } );
-		} else {
-			if( req.files === undefined ){
+		} else 
+		{
+			if( req.files === undefined )
+			{
 				console.log( 'Error: No File Selected!' );
 				res.json( 'Error: No File Selected' );
-			} else {
+			} 
+			else 
+			{
 				let fileArray = req.files,
 					fileLocation;
 				const galleryImgLocationArray = [];
