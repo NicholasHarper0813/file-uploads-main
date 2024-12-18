@@ -1,9 +1,9 @@
 const multerS3 = require( 'multer-s3' );
 const express = require( 'express' );
-const aws = require( 'aws-sdk' );
 const multer = require('multer');
-const router = express.Router();
+const aws = require( 'aws-sdk' );
 const path = require( 'path' );
+const router = express.Router();
 
 const s3 = new aws.S3({
 	accessKeyId: 'xxx',
@@ -20,8 +20,9 @@ const profileImgUpload = multer({
 			cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
 		}
 	}),
-	limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
-	fileFilter: function( req, file, cb ){
+	limits:{ fileSize: 2000000 },
+	fileFilter: function( req, file, cb )
+	{
 		checkFileType( file, cb );
 	}
 }).single('profileImage');
@@ -45,14 +46,20 @@ router.post( '/profile-img-upload', ( req, res ) => {
 	profileImgUpload( req, res, ( error ) => {
 		console.log( 'requestOkokok', req.file );
 		console.log( 'error', error );
-		if( error ){
+		if( error )
+		{
 			console.log( 'errors', error );
 			res.json( { error: error } );
-		} else {
-			if( req.file === undefined ){
+		} 
+		else 
+		{
+			if( req.file === undefined )
+			{
 				console.log( 'Error: No File Selected!' );
 				res.json( 'Error: No File Selected' );
-			} else {
+			} 
+			else 
+			{
 				const imageName = req.file.key;
 				const imageLocation = req.file.location;
 				res.json( {
@@ -69,12 +76,14 @@ const uploadsBusinessGallery = multer({
 		s3: s3,
 		bucket: 'orionnewbucket',
 		acl: 'public-read',
-		key: function (req, file, cb) {
+		key: function (req, file, cb)
+		{
 			cb( null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
 		}
 	}),
-	limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
-	fileFilter: function( req, file, cb ){
+	limits:{ fileSize: 2000000 },
+	fileFilter: function( req, file, cb )
+	{
 		checkFileType( file, cb );
 	}
 }).array( 'galleryImage', 4 );
@@ -86,7 +95,8 @@ router.post('/multiple-file-upload', ( req, res ) => {
 		{
 			console.log( 'errors', error );
 			res.json( { error: error } );
-		} else 
+		} 
+		else 
 		{
 			if( req.files === undefined )
 			{
@@ -98,7 +108,8 @@ router.post('/multiple-file-upload', ( req, res ) => {
 				let fileArray = req.files,
 					fileLocation;
 				const galleryImgLocationArray = [];
-				for ( let i = 0; i < fileArray.length; i++ ) {
+				for ( let i = 0; i < fileArray.length; i++ ) 
+				{
 					fileLocation = fileArray[ i ].location;
 					console.log( 'filenm', fileLocation );
 					galleryImgLocationArray.push( fileLocation )
