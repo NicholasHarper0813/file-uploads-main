@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import $ from 'jquery';
 
-class Home extends Component {
-	constructor( props ) {
+class Home extends Component 
+{
+	constructor( props ) 
+	{
 		super( props );
-		this.state = {
+		this.state = 
+		{
 			selectedFile: null,
 			selectedFiles: null
 		}
@@ -26,7 +29,8 @@ class Home extends Component {
 
 	singleFileUploadHandler = ( event ) => {
 		const data = new FormData();
-		if ( this.state.selectedFile ) {
+		if ( this.state.selectedFile )
+		{
 			data.append( 'profileImage', this.state.selectedFile, this.state.selectedFile.name );
 			axios.post( '/api/profile/profile-img-upload', data, {
 				headers: {
@@ -36,15 +40,22 @@ class Home extends Component {
 				}
 			})
 				.then( ( response ) => {
-					if ( 200 === response.status ) {
-						if( response.data.error ) {
-							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
+					if ( 200 === response.status ) 
+					{
+						if( response.data.error )
+						{
+							if ( 'LIMIT_FILE_SIZE' === response.data.error.code )
+							{
 								this.ocShowAlert( 'Max size: 2MB', 'red' );
-							} else {
+							} 
+							else 
+							{
 								console.log( response.data );
 								this.ocShowAlert( response.data.error, 'red' );
 							}
-						} else {
+						} 
+						else 
+						{
 							let fileName = response.data;
 							console.log( 'filedata', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
@@ -54,7 +65,8 @@ class Home extends Component {
 				this.ocShowAlert( error, 'red' );
 			});
 		} 
-		else {
+		else 
+		{
 			this.ocShowAlert( 'Please upload file', 'red' );
 		}
 	};
@@ -62,8 +74,10 @@ class Home extends Component {
 	multipleFileUploadHandler = () => {
 		const data = new FormData();
 		let selectedFiles = this.state.selectedFiles;
-		if ( selectedFiles ) {
-			for ( let i = 0; i < selectedFiles.length; i++ ) {
+		if ( selectedFiles )
+		{
+			for ( let i = 0; i < selectedFiles.length; i++ )
+			{
 				data.append( 'galleryImage', selectedFiles[ i ], selectedFiles[ i ].name );
 			}
 			axios.post( '/api/profile/multiple-file-upload', data, {
@@ -75,18 +89,25 @@ class Home extends Component {
 			})
 				.then( ( response ) => {
 					console.log( 'res', response );
-					if ( 200 === response.status ) {
-						// If file size is larger than expected.
-						if( response.data.error ) {
-							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
+					if ( 200 === response.status )
+					{
+						if( response.data.error ) 
+						{
+							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) 
+							{
 								this.ocShowAlert( 'Max size: 2MB', 'red' );
-							} else if ( 'LIMIT_UNEXPECTED_FILE' === response.data.error.code ){
+							} 
+							else if ( 'LIMIT_UNEXPECTED_FILE' === response.data.error.code )
+							{
 								this.ocShowAlert( 'Max 4 images allowed', 'red' );
-							} else {
-								// If not the given ile type
+							} 
+							else 
+							{
 								this.ocShowAlert( response.data.error, 'red' );
 							}
-						} else {
+						}
+						else 
+						{
 							let fileName = response.data;
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
@@ -95,7 +116,9 @@ class Home extends Component {
 				}).catch( ( error ) => {
 				this.ocShowAlert( error, 'red' );
 			});
-		} else {
+		} 
+		else 
+		{
 			this.ocShowAlert( 'Please upload file', 'red' );
 		}
 	};
@@ -108,19 +131,18 @@ class Home extends Component {
 		$( alertEl ).css( 'background', background );
 		alertEl.appendChild( textNode );
 		alertContainer.appendChild( alertEl );
-		setTimeout( function () {
+		setTimeout( function () 
+		{
 			$( alertEl ).fadeOut( 'slow' );
 			$( alertEl ).remove();
 		}, 3000 );
 	};
 
-	render() {
-		console.log( this.state );
+	render() 
+	{
 		return(
 			<div className="container">
-				{/* For Alert box*/}
 				<div id="oc-alert-container"></div>
-				{/* Single File Upload*/}
 				<div className="card border-light mb-3 mt-5" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
 					<div className="card-header">
 						<h3 style={{ color: '#555', marginLeft: '12px' }}>Single Image Upload</h3>
@@ -134,7 +156,6 @@ class Home extends Component {
 						</div>
 					</div>
 				</div>
-				{/* Multiple File Upload */}
 				<div className="card border-light mb-3" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
 					<div className="card-header">
 						<h3 style={{ color: '#555', marginLeft: '12px' }}>Upload Muliple Images</h3>
