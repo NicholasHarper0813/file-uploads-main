@@ -2,7 +2,8 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "dependencies": 
+  {
     "axios": "^0.21.2",
     "classnames": "^2.2.6",
     "jquery": "^3.5.0",
@@ -17,13 +18,15 @@
     "redux-thunk": "^2.3.0"
   },
   "proxy": "http://localhost:5000",
-  "scripts": {
+  "scripts": 
+  {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
+  "eslintConfig":
+  {
     "extends": "react-app"
   },
   "browserslist": [
