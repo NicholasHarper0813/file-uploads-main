@@ -1,9 +1,9 @@
 const multerS3 = require( 'multer-s3' );
 const express = require( 'express' );
-const multer = require('multer');
-const aws = require( 'aws-sdk' );
-const path = require( 'path' );
 const router = express.Router();
+const multer = require('multer');
+const path = require( 'path' );
+const aws = require( 'aws-sdk' );
 
 const s3 = new aws.S3({
 	accessKeyId: 'xxx',
@@ -16,7 +16,8 @@ const profileImgUpload = multer({
 		s3: s3,
 		bucket: 'youbucketname',
 		acl: 'public-read',
-		key: function (req, file, cb) {
+		key: function (req, file, cb) 
+		{
 			cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
 		}
 	}),
@@ -105,8 +106,7 @@ router.post('/multiple-file-upload', ( req, res ) => {
 			} 
 			else 
 			{
-				let fileArray = req.files,
-					fileLocation;
+				let fileArray = req.files, fileLocation;
 				const galleryImgLocationArray = [];
 				for ( let i = 0; i < fileArray.length; i++ ) 
 				{
