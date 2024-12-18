@@ -6,17 +6,21 @@ const isLocalhost = Boolean(
     )
 );
 
-export function register(config) {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+export function register(config) 
+{
+  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) 
+  {
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
-    if (publicUrl.origin !== window.location.origin) {
+    if (publicUrl.origin !== window.location.origin) 
+    {
       return;
     }
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
-      if (isLocalhost) {
+      if (isLocalhost) 
+      {
         checkValidServiceWorker(swUrl, config);
 
         navigator.serviceWorker.ready.then(() => {
@@ -25,34 +29,36 @@ export function register(config) {
               'worker. To learn more, visit https://goo.gl/SC7cgQ'
           );
         });
-      } else {
+      } 
+      else 
+      {
         registerValidSW(swUrl, config);
       }
     });
   }
 }
 
-function registerValidSW(swUrl, config) {
+function registerValidSW(swUrl, config) 
+{
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
-          if (installingWorker.state === 'installed') {
+          if (installingWorker.state === 'installed')
+          {
             if (navigator.serviceWorker.controller)
             {
-              console.log('New content is available; please refresh.');
-
               if (config.onUpdate) 
               {
                 config.onUpdate(registration);
               }
             } 
-            else {
-              console.log('Content is cached for offline use.');
-              
-              if (config.onSuccess) {
+            else 
+            {              
+              if (config.onSuccess)
+              {
                 config.onSuccess(registration);
               }
             }
@@ -65,20 +71,22 @@ function registerValidSW(swUrl, config) {
     });
 }
 
-function checkValidServiceWorker(swUrl, config) {
+function checkValidServiceWorker(swUrl, config) 
+{
   fetch(swUrl)
     .then(response => {
       if (
         response.status === 404 ||
-        response.headers.get('content-type').indexOf('javascript') === -1
-      ) {
+        response.headers.get('content-type').indexOf('javascript') === -1) 
+      {
         navigator.serviceWorker.ready.then(registration => {
           registration.unregister().then(() => {
             window.location.reload();
           });
         });
       } 
-      else {
+      else 
+      {
         registerValidSW(swUrl, config);
       }
     })
@@ -89,8 +97,10 @@ function checkValidServiceWorker(swUrl, config) {
     });
 }
 
-export function unregister() {
-  if ('serviceWorker' in navigator) {
+export function unregister()
+{
+  if ('serviceWorker' in navigator)
+  {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();
     });
